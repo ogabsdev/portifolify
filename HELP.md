@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'br.com.via.simple-ms-template' is invalid and this project uses 'br.com.via.simplemstemplate' instead.
+* The original package name 'br.com.portifolify.simple-ms-template' is invalid and this project uses 'br.com.portifolify.simplemstemplate' instead.
 
 # Getting Started
 
