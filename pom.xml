@@ -28,19 +28,18 @@
 		<maven.pmd.version>3.21.2</maven.pmd.version>
 		<maven.jacoco.version>0.8.11</maven.jacoco.version>
 		<spring.web.version>3.1.5</spring.web.version>
+		<spring.web.tomcat.jasper.version>10.1.17</spring.web.tomcat.jasper.version>
+		<spring.web.tomcat.version>3.2.0</spring.web.tomcat.version>
 		<spring.dependency.version>3.2.0</spring.dependency.version>
 		<spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
-		<spring.doc.version>2.2.0</spring.doc.version>
 		<logstash.version>7.2</logstash.version>
 		<mapstruct.version>1.5.2.Final</mapstruct.version>
 		<jakarta.inject.version>2.0.1</jakarta.inject.version>
-		<feign.version>4.1.0</feign.version>
 		<h2.version>2.2.220</h2.version>
 		<junit.version>4.13.1</junit.version>
-<!--		<assertj.version>3.23.1</assertj.version>-->
 		<jupiter.version>5.9.0</jupiter.version>
 		<jupiter.engine.version>5.8.2</jupiter.engine.version>
-		<awaitility.version>4.2.0</awaitility.version>
+		<jakarta.servlet.jsp.version>2.0.0</jakarta.servlet.jsp.version>
 		<wiremock.version>3.0.4</wiremock.version>
 		<restassured.version>5.3.2</restassured.version>
 		<lombok.version>1.18.24</lombok.version>

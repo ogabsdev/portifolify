@@ -2,14 +2,10 @@ package br.com.portifolify.application.config.errorhandler;
 
 import br.com.portifolify.domain.exception.DomainException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -20,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
-@RestControllerAdvice
+@ControllerAdvice
 public class RestErrorHandler extends ResponseEntityExceptionHandler {
 
     private static final String URL_STATUS_CODE_DOC = "https://httpwg.org/specs/rfc9110.html";
