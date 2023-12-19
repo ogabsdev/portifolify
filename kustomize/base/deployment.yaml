@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-application-name-here
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app: your-application-name-here
+  template:
+    metadata:
+      labels:
+        app: your-application-name-here
+    spec:
+      serviceAccount: your-application-name-here
+      nodeSelector:
+        app: your-squad-name-here
+      containers:
+          - name: your-application-name-here
+            image: harbor01.viavarejo.com.br/your-squad-name-here/your-application-namespace-here-sit/your-application-name-here
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            resources:
+              requests:
+                cpu: "500m"
+                memory: "512Mi"
+              limits:
+                cpu: "1000m"
+                memory: "1500Mi"
+            env:
+              - name: DATABASE_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                      name: database.password
+                      key: DATABASE_PASSWORD
+            envFrom:
+              - configMapRef:
+                  name: your-application-name-here
+            livenessProbe:
+              exec:
+                command:
+                  - cat
+                  - /etc/hosts
+              initialDelaySeconds: 5
+              periodSeconds: 30
+              timeoutSeconds: 10
+              successThreshold: 1
+              failureThreshold: 5
+            readinessProbe:
+              httpGet:
+                path: /actuator/health/readiness
+                port: 8080
+              initialDelaySeconds: 90
+              periodSeconds: 30
+              timeoutSeconds: 10
+              successThreshold: 1
+              failureThreshold: 5
+      dnsPolicy: ClusterFirstWithHostNet
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: your-application-name-here
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: your-application-name-here
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 70

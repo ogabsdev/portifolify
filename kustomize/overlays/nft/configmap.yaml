@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  APPLICATION_ENVIRONMENT: "nft"
+  SPRING_PROFILES_ACTIVE: "nft"
+kind: ConfigMap
+metadata:
+  name: your-application-name-here

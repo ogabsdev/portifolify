@@ -1,0 +1,34 @@
+spring:
+  jpa:
+    open-in-view: false
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: ms-template-group-id
+
+server:
+  port: 8080
+
+springdoc:
+  swagger-ui.path: /swagger-ui
+  packagesToScan: br.com.via.application.entrypoint.restcontroller
+  pathsToMatch: /**
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include=*:
+
+logging:
+  level:
+    br.com.via.dataprovider.web.restclient: DEBUG
+
+kafka:
+  topics:
+    customer-domain-event:
+      name: register.cmd.customer # <domain>.<classification>.<description>
+

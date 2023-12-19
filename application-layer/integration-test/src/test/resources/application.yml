@@ -1,0 +1,30 @@
+spring:
+  main:
+    banner-mode: "off"
+  profiles:
+    active: test
+  jpa:
+    open-in-view: false
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      auto-offset-reset: earliest
+      group-id: ms-template-group-id
+
+logging:
+  config: classpath:logback-local.xml
+
+external-service:
+  credit-bureau-api:
+    url: http://127.0.0.1:8888/credit-bureau-api
+
+kafka:
+  topics:
+    customer-domain-event:
+      name: azure.customer.cmd.customer-changed

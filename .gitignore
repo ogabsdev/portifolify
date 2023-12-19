@@ -1,0 +1,71 @@
+##############################
+## Java
+##############################
+.mtj.tmp/
+*.class
+*.jar
+
+hs_err_pid*
+
+##############################
+## Maven
+##############################
+target/
+
+##############################
+## Gradle
+##############################
+bin/
+build/
+.gradle
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
+
+##############################
+## Eclipse
+##############################
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+
+##############################
+## Visual Studio Code
+##############################
+.vscode/
+.code-workspace
+
+##############################
+## Intellij IDEA
+##############################
+.run
+idea/**
+*.iws
+out/
+.idea_modules/
+
+##############################
+## OS X
+##############################
+.DS_Store
+/.idea
+
+
+##############################
+## JACOCO
+##############################
+docs
+
+
+##############################
+## OUTROS
+##############################
+/.run
+
+# Automatically adding by action 'cache-management' (convair-actions)
+**/.gradle/caches/**
+**/.gradle/wrapper/**

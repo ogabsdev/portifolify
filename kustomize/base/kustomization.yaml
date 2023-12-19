@@ -1,0 +1,16 @@
+commonLabels:
+  app: your-application-name-here
+resources:
+- serviceAccount.yaml
+- service.yaml
+- rbac.yaml
+- route.yaml
+- configmap.yaml
+- deployment.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+  - name: harbor01.viavarejo.com.br/your-squad-name-here/your-application-namespace-here-sit/your-application-name-here
+    newName: harbor01.viavarejo.com.br/your-squad-name-here/your-application-namespace-here-sit/your-application-name-here
+    newTag: 1.3.0-1
+namespace: your-application-namespace-here-sit

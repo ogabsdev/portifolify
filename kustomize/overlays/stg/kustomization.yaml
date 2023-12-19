@@ -1,0 +1,15 @@
+patchesStrategicMerge:
+  - configmap.yaml
+  - route.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+images:
+  - name: harbor01.viavarejo.com.br/your-squad-name-here/your-application-namespace-here-sit/your-application-name-here
+    newName: harbor01.viavarejo.com.br/your-squad-name-here/your-application-namespace-here-stg/your-application-name-here
+    newTag: bra-1383-5
+  - name: harbor01.viavarejo.com.br/your-squad-name-here/your-application-namespace-here-sit/your-application-name-here
+    newName: harbor01.viavarejo.com.br/your-squad-name-here/your-application-namespace-here-stg/your-application-name-here
+    newTag: 19.0.0-48
+namespace: your-application-namespace-here-stg

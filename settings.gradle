@@ -1,0 +1,6 @@
+rootProject.name = 'springboot-ms-template'
+
+include "application-layer:application"
+include "application-layer:integration-test"
+include "business-layer:domain"
+include "business-layer:core"

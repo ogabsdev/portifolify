@@ -1,0 +1,24 @@
+logging:
+  config: classpath:logback-local.xml
+
+spring:
+  h2:
+    console.enabled: true
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  kafka:
+    bootstrap-servers: 127.0.0.1:9093
+
+external-service:
+  credit-bureau-api:
+    url: http://127.0.0.1:2030/credit-bureau-api

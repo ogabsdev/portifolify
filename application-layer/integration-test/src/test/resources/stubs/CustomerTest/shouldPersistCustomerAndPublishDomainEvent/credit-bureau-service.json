@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/credit-bureau-api/documents/\\d{10,11}/credit-score"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ],
+    "jsonBody": {
+      "scorePercentage" : 93,
+      "processingDate" : "2022-12-03T10:15:30"
+    }
+  }
+}

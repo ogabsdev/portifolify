@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  APPLICATION_ENVIRONMENT: "hlg"
+  SPRING_PROFILES_ACTIVE: "hlg"
+kind: ConfigMap
+metadata:
+  name: your-application-name-here

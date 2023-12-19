@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  APPLICATION_ENVIRONMENT: "prd"
+  SPRING_PROFILES_ACTIVE: "prd"
+kind: ConfigMap
+metadata:
+  name: your-application-name-here

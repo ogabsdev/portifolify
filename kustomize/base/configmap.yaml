@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  APPLICATION_ENVIRONMENT: "sit"
+  SPRING_PROFILES_ACTIVE: "sit"
+  management.endpoints.web.exposure.include: "dynatrace,health,info,metric"
+kind: ConfigMap
+metadata:
+  name: your-application-name-here

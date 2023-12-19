@@ -1,0 +1,13 @@
+plugins {
+    id 'org.springframework.boot' apply true
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    // Lombok
+    api "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor 'org.projectlombok:lombok'
+}
