@@ -1,4 +1,4 @@
-package br.com.via;
+package br.com.portifolify;
 
 import br.com.portifolify.application.dataprovider.impl.event.transactionaloutbox.OutboxStatus;
 import br.com.portifolify.application.dataprovider.impl.persistence.entity.CustomerOutboxEntity;

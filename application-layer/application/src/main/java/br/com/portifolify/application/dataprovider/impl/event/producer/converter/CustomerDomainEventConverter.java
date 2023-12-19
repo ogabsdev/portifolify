@@ -5,15 +5,12 @@ import br.com.portifolify.domain.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import org.mapstruct.Mappings;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA)
 public interface CustomerDomainEventConverter {
 
-    @Mappings({
-            @Mapping(target = "scorePercentage", source = "creditScore.scorePercentage"),
-            @Mapping(target = "scoreProcessingDate", source = "creditScore.processingDate")
-    })
+    @Mapping(target = "scorePercentage", source = "creditScore.scorePercentage")
+    @Mapping(target = "scoreProcessingDate", source = "creditScore.processingDate")
     CustomerDomainEventRecord convert(Customer customer);
 
 }
