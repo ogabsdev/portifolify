@@ -1,7 +1,0 @@
-apiVersion: v1
-data:
-  APPLICATION_ENVIRONMENT: stg
-  SPRING_PROFILES_ACTIVE: "stg"
-kind: ConfigMap
-metadata:
-  name: your-application-name-here

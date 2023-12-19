@@ -39,7 +39,7 @@ public class CleanArchitectureRuleSetTest {
     private static final String SERVICES_PACKAGE = BASE_PACKAGE + ".core.service..";
     private static final String DATAPROVIDER_PACKAGE = BASE_PACKAGE + ".core.dataprovider..";
 
-    private static final String ENTITY_PACKAGE = "br.com.via.application.dataprovider.impl.persistence.entity..";
+    private static final String ENTITY_PACKAGE = "br.com.portifolify.application.dataprovider.impl.persistence.entity..";
 
     private static final String USECASE_IMPL_PACKAGE = BASE_PACKAGE + ".core.usecase.impl..";
 

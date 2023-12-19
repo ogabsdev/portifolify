@@ -4,6 +4,7 @@
 .mtj.tmp/
 *.class
 *.jar
+*.iml
 
 hs_err_pid*
 
@@ -11,6 +12,8 @@ hs_err_pid*
 ## Maven
 ##############################
 target/
+.mvn
+
 
 ##############################
 ## Gradle
