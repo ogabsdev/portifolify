@@ -14,7 +14,7 @@ import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import com.tngtech.archunit.library.Architectures;
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.junit.runner.RunWith;
 import org.springframework.stereotype.Component;
 
@@ -177,11 +177,11 @@ public class CleanArchitectureRuleSetTest {
         ArchCondition<JavaField> annotatedWithSpringAutowired = beAnnotatedWith("org.springframework.beans"
                 + ".factory.annotation.Autowired");
         ArchCondition<JavaField> annotatedWithGuiceInject = beAnnotatedWith("com.google.inject.Inject");
-        ArchCondition<JavaField> annotatedWithJakartaInject = beAnnotatedWith("javax.inject.Inject");
-        ArchCondition<JavaField> annotatedWithJakartaResource = beAnnotatedWith("javax.annotation.Resource");
+        ArchCondition<JavaField> annotatedWithjavaxInject = beAnnotatedWith("javax.inject.Inject");
+        ArchCondition<JavaField> annotatedWithjavaxResource = beAnnotatedWith("javax.annotation.Resource");
         return annotatedWithSpringAutowired
                 .or(annotatedWithGuiceInject)
-                .or(annotatedWithJakartaInject).or(annotatedWithJakartaResource)
+                .or(annotatedWithjavaxInject).or(annotatedWithjavaxResource)
                 .as("be annotated with an injection annotation");
     }
 

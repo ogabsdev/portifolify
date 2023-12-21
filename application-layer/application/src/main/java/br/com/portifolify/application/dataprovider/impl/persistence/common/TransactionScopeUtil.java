@@ -1,8 +1,8 @@
 package br.com.portifolify.application.dataprovider.impl.persistence.common;
 
 import br.com.portifolify.application.dataprovider.impl.persistence.entity.common.VersionableEntity;
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
