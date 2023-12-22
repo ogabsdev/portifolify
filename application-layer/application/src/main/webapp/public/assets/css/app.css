@@ -33,6 +33,7 @@ html,
   background-color: var(--bs-body-bg);
 }
 
-.form-control, .form-control:focus {
+.form-control, .form-control:focus,
+.form-select, .form-select:focus {
  background-color: #fff;
 }

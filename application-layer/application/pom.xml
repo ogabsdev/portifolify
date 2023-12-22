@@ -31,11 +31,6 @@
 			<version>${javax.persistence.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>${javax.transaction.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
@@ -84,6 +79,11 @@
 			<artifactId>archunit-junit4</artifactId>
 			<version>${archunit.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hashids</groupId>
+			<artifactId>hashids</artifactId>
+			<version>${hashid.version}</version>
 		</dependency>
 	</dependencies>
 
