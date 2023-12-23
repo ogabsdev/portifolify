@@ -1,32 +1,40 @@
 package br.com.portifolify.application.entrypoint.webcontroller;
 
+import br.com.portifolify.application.entrypoint.webcontroller.dto.converter.ProjectWebControllerConverter;
 import br.com.portifolify.application.entrypoint.webcontroller.dto.request.StoreProjectRequest;
-import br.com.portifolify.core.usecase.FindAllManagerUseCase;
-import br.com.portifolify.core.usecase.FindAllProjectRiskUseCase;
-import br.com.portifolify.core.usecase.FindAllProjectStatusUseCase;
+import br.com.portifolify.core.usecase.*;
+import br.com.portifolify.core.usecase.dto.ProjectDTO;
+import br.com.portifolify.core.usecase.exception.ManagerNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("projects")
 public class ProjectController {
 
+    private final FindProjectUseCase findProjectUseCase;
+
+    private final CreateProjectUseCase createProjectUseCase;
+
+    private final FindAllManagerUseCase findAllManagerUseCase;
+
     private final FindAllProjectRiskUseCase findAllProjectRiskUseCase;
 
     private final FindAllProjectStatusUseCase findAllProjectStatusUseCase;
 
-    private final FindAllManagerUseCase findAllManagerUseCase;
+    private final ProjectWebControllerConverter projectControllerConverter;
 
     private static final String CREATE_VIEW_PATH = "project/create";
+
+    private static final String INDEX_VIEW_PATH = "project/index";
 
     private static final String VIEW_VAR_PROJECT_RISKS = "projectRisks";
 
@@ -36,10 +44,19 @@ public class ProjectController {
 
     private static final String VIEW_VAR_PROJECT = "project";
 
-    @GetMapping
-    public ModelAndView index(ModelAndView modelAndView) {
+    private static final String VIEW_VAR_PROJECTS = "projects";
 
-        modelAndView.setViewName("project/index");
+    private static final ModelAndView REDIRECT_AFTER_SUCCESS = new ModelAndView("redirect:/projects");
+
+    @GetMapping
+    public ModelAndView index(
+            ModelAndView modelAndView,
+            @RequestParam(name = "q", defaultValue = "") String query
+    ) {
+
+        modelAndView.setViewName(INDEX_VIEW_PATH);
+
+        modelAndView.addObject(VIEW_VAR_PROJECTS, findProjectUseCase.find(query));
 
         return modelAndView;
     }
@@ -66,6 +83,16 @@ public class ProjectController {
             @Valid @ModelAttribute(VIEW_VAR_PROJECT) StoreProjectRequest request,
             BindingResult validationResult
     ) {
+
+        try {
+            ProjectDTO projectDTO = projectControllerConverter.convert(request);
+            createProjectUseCase.create(projectDTO);
+            return REDIRECT_AFTER_SUCCESS;
+        } catch (ManagerNotFoundException e) {
+            log.warn("Manager not found", e);
+            validationResult.rejectValue("managerId", "Gerente não é válido");
+        }
+
         modelAndView.setViewName(CREATE_VIEW_PATH);
 
         modelAndView.addObject(VIEW_VAR_PROJECT_RISKS, findAllProjectRiskUseCase.find());
@@ -78,5 +105,4 @@ public class ProjectController {
 
         return modelAndView;
     }
-
 }

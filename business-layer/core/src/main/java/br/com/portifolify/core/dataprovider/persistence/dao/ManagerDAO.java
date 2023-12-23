@@ -8,4 +8,6 @@ public interface ManagerDAO {
 
     List<Manager> findAll();
 
+    Manager find(String id);
+
 }

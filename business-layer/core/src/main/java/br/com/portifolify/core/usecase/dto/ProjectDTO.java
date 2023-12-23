@@ -2,7 +2,7 @@ package br.com.portifolify.core.usecase.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class ProjectDTO {
@@ -11,15 +11,13 @@ public class ProjectDTO {
 
     private String name;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime expectedEndDate;
+    private LocalDate expectedEndDate;
 
-    private LocalDateTime realEndDate;
+    private LocalDate realEndDate;
 
-    private String projectRiskId;
-
-    private String projectRiskDescription;
+    private String projectRisk;
 
     private String description;
 
@@ -29,8 +27,6 @@ public class ProjectDTO {
 
     private String managerName;
 
-    private String projectStatusId;
-
-    private String projectStatusDescription;
+    private String projectStatus;
 
 }

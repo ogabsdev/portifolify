@@ -3,25 +3,24 @@ package br.com.portifolify.domain;
 import br.com.portifolify.domain.vo.Id;
 import lombok.*;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Project {
 
-    @NonNull
     private Id id;
 
     @NonNull
     private String name;
 
     @NonNull
-    private ZonedDateTime startDate;
+    private LocalDate startDate;
 
-    private ZonedDateTime expectedEndDate;
+    private LocalDate expectedEndDate;
 
-    private ZonedDateTime realEndDate;
+    private LocalDate realEndDate;
 
     @NonNull
     private ProjectRisk projectRisk;

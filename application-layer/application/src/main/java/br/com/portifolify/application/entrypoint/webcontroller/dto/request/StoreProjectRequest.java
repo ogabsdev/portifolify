@@ -15,10 +15,12 @@ public class StoreProjectRequest {
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @FutureOrPresent
     private LocalDate startDate;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @FutureOrPresent
     private LocalDate expectedEndDate;
 
     @Null
