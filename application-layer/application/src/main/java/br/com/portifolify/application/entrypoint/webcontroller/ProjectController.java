@@ -5,6 +5,7 @@ import br.com.portifolify.application.entrypoint.webcontroller.dto.request.Store
 import br.com.portifolify.core.usecase.*;
 import br.com.portifolify.core.usecase.dto.ProjectDTO;
 import br.com.portifolify.core.usecase.exception.ManagerNotFoundException;
+import br.com.portifolify.core.usecase.exception.ProjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -32,9 +33,13 @@ public class ProjectController {
 
     private final ProjectWebControllerConverter projectControllerConverter;
 
-    private static final String CREATE_VIEW_PATH = "project/create";
+    private final FindProjectByIdUseCase findProjectByIdUseCase;
 
     private static final String INDEX_VIEW_PATH = "project/index";
+
+    private static final String CREATE_VIEW_PATH = "project/create";
+
+    private static final String EDIT_VIEW_PATH = "project/edit";
 
     private static final String VIEW_VAR_PROJECT_RISKS = "projectRisks";
 
@@ -102,6 +107,28 @@ public class ProjectController {
         modelAndView.addObject(VIEW_VAR_MANAGER, findAllManagerUseCase.find());
 
         modelAndView.addObject(VIEW_VAR_PROJECT, request);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}/edit")
+    public ModelAndView edit(ModelAndView modelAndView, @PathVariable("id") String id) {
+        try {
+            ProjectDTO projectDTO = findProjectByIdUseCase.find(id);
+
+            modelAndView.addObject(VIEW_VAR_PROJECT, projectControllerConverter.convert(projectDTO));
+
+            modelAndView.setViewName(EDIT_VIEW_PATH);
+
+            modelAndView.addObject(VIEW_VAR_PROJECT_RISKS, findAllProjectRiskUseCase.find());
+
+            modelAndView.addObject(VIEW_VAR_PROJECT_STATUSES, findAllProjectStatusUseCase.find());
+
+            modelAndView.addObject(VIEW_VAR_MANAGER, findAllManagerUseCase.find());
+
+        } catch (ProjectNotFoundException e) {
+            log.warn("Project not found", e);
+        }
 
         return modelAndView;
     }

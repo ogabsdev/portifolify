@@ -10,4 +10,6 @@ public interface ProjectDAO {
 
     List<Project> find(String value);
 
+    Project findById(String id);
+
 }

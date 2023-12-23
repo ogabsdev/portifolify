@@ -2,6 +2,7 @@ package br.com.portifolify.application.dataprovider.impl.persistence.dao;
 
 import br.com.portifolify.application.dataprovider.impl.persistence.entity.ProjectEntity;
 import br.com.portifolify.application.dataprovider.impl.persistence.entity.converter.ProjectEntityConverter;
+import br.com.portifolify.core.dataprovider.cryptography.Decrypt;
 import br.com.portifolify.core.dataprovider.cryptography.Encrypt;
 import br.com.portifolify.core.dataprovider.persistence.dao.ProjectDAO;
 import br.com.portifolify.domain.Project;
@@ -21,6 +22,8 @@ public class ProjectDAOImpl implements ProjectDAO {
     private final ProjectEntityConverter projectEntityConverter;
 
     private final Encrypt<Long, String> encrypt;
+
+    private final Decrypt<String, Long> decrypt;
 
     private static final String QUERY_FIND_PROJECTS = """
                 Select p
@@ -62,6 +65,19 @@ public class ProjectDAOImpl implements ProjectDAO {
                         projectEntity
                 ))
                 .toList();
+    }
+
+    @Override
+    public Project findById(String id) {
+
+        Long plainId = decrypt.value(id);
+
+        ProjectEntity projectEntity = entityManager.find(ProjectEntity.class, plainId);
+
+        return projectEntityConverter.convert(
+                encrypt.value(projectEntity.getId()),
+                projectEntity
+        );
     }
 
 }
