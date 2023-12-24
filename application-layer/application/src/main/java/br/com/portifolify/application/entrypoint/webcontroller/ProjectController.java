@@ -132,4 +132,26 @@ public class ProjectController {
 
         return modelAndView;
     }
+
+    @PutMapping("/{id}")
+    public ModelAndView update(ModelAndView modelAndView, @PathVariable("id") String id) {
+        try {
+            ProjectDTO projectDTO = findProjectByIdUseCase.find(id);
+
+            modelAndView.addObject(VIEW_VAR_PROJECT, projectControllerConverter.convert(projectDTO));
+
+            modelAndView.setViewName(EDIT_VIEW_PATH);
+
+            modelAndView.addObject(VIEW_VAR_PROJECT_RISKS, findAllProjectRiskUseCase.find());
+
+            modelAndView.addObject(VIEW_VAR_PROJECT_STATUSES, findAllProjectStatusUseCase.find());
+
+            modelAndView.addObject(VIEW_VAR_MANAGER, findAllManagerUseCase.find());
+
+        } catch (ProjectNotFoundException e) {
+            log.warn("Project not found", e);
+        }
+
+        return modelAndView;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -55,6 +56,18 @@ public class ProjectStatusDAOImpl implements ProjectStatusDAO {
         }
 
         return inMemoryData;
+    }
+
+    @Override
+    public ProjectStatus find(String description) {
+
+        List<ProjectStatus> projectStatuses = findAll();
+
+        Optional<ProjectStatus> projectStatus = projectStatuses.stream()
+                .filter(status -> status.getDescription().equalsIgnoreCase(description))
+                .findFirst();
+
+        return projectStatus.orElse(null);
     }
 
 }

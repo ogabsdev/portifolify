@@ -8,4 +8,6 @@ public interface ProjectStatusDAO {
 
     List<ProjectStatus> findAll();
 
+    ProjectStatus find(String description);
+
 }

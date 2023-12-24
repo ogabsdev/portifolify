@@ -228,6 +228,15 @@
 
                 <hr />
 
+                <div class="d-flex align-items-center justify-content-start gap-3">
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                    >
+                        Remover
+                    </button>
+                </div>
+
                 <div class="d-flex align-items-center justify-content-end gap-3">
                     <a
                         href="/projects"
