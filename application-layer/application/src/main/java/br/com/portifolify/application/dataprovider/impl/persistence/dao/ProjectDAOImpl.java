@@ -5,13 +5,16 @@ import br.com.portifolify.application.dataprovider.impl.persistence.entity.conve
 import br.com.portifolify.core.dataprovider.cryptography.Decrypt;
 import br.com.portifolify.core.dataprovider.cryptography.Encrypt;
 import br.com.portifolify.core.dataprovider.persistence.dao.ProjectDAO;
+import br.com.portifolify.core.dataprovider.persistence.dao.ProjectStatusDAO;
 import br.com.portifolify.domain.Project;
+import br.com.portifolify.domain.ProjectStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,6 +27,8 @@ public class ProjectDAOImpl implements ProjectDAO {
     private final Encrypt<Long, String> encrypt;
 
     private final Decrypt<String, Long> decrypt;
+
+    private final ProjectStatusDAO projectStatusDAO;
 
     private static final String QUERY_FIND_PROJECTS = """
                 Select p
@@ -44,7 +49,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return projectEntityConverter.convert(
                 encrypt.value(projectEntity.getId()),
-                projectEntity
+                encrypt.value(projectEntity.getManager().getId()),
+                projectEntity,
+                projectStatusDAO.find(projectEntity.getProjectStatus())
         );
     }
 
@@ -60,10 +67,16 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return query.getResultList()
                 .stream()
-                .map(projectEntity -> projectEntityConverter.convert(
-                        encrypt.value(projectEntity.getId()),
-                        projectEntity
-                ))
+                .map(projectEntity -> {
+                    ProjectStatus projectStatus = projectStatusDAO.find(projectEntity.getProjectStatus());
+
+                    return projectEntityConverter.convert(
+                            encrypt.value(projectEntity.getId()),
+                            encrypt.value(projectEntity.getManager().getId()),
+                            projectEntity,
+                            projectStatus
+                    );
+                })
                 .toList();
     }
 
@@ -74,9 +87,39 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         ProjectEntity projectEntity = entityManager.find(ProjectEntity.class, plainId);
 
+        if (Objects.isNull(projectEntity)) {
+            return null;
+        }
+
+        String encryptedProjectId = encrypt.value(projectEntity.getId());
+
+        String encryptedManagerId = encrypt.value(projectEntity.getManager().getId());
+
         return projectEntityConverter.convert(
-                encrypt.value(projectEntity.getId()),
-                projectEntity
+                encryptedProjectId,
+                encryptedManagerId,
+                projectEntity,
+                projectStatusDAO.find(projectEntity.getProjectStatus())
+        );
+    }
+
+    @Override
+    public Project update(Project project) {
+        Long projectId = decrypt.value(project.getId().getValue());
+
+        ProjectEntity projectEntity = projectEntityConverter.convert(projectId, project);
+
+        String encryptedProjectId = encrypt.value(projectEntity.getId());
+
+        String encryptedManagerId = encrypt.value(projectEntity.getManager().getId());
+
+        ProjectEntity projectEntityUpdated = entityManager.merge(projectEntity);
+
+        return projectEntityConverter.convert(
+                encryptedProjectId,
+                encryptedManagerId,
+                projectEntityUpdated,
+                projectStatusDAO.find(projectEntity.getProjectStatus())
         );
     }
 

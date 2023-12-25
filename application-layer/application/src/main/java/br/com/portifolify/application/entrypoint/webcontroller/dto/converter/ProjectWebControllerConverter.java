@@ -18,4 +18,8 @@ public interface ProjectWebControllerConverter {
     @Mapping(target = "projectStatusId", source = "projectStatus")
     UpdateProjectRequest convert(ProjectDTO projectDTO);
 
+    @Mapping(target = "projectRisk", source = "projectRiskId")
+    @Mapping(target = "projectStatus", source = "projectStatusId")
+    ProjectDTO convert(UpdateProjectRequest request);
+
 }

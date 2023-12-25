@@ -16,13 +16,13 @@
                     </a>
                 </div>
                 <div>
-                    <h2>Novo Projeto</h2>
+                    <h2>Editar: ${project.name}</h2>
                 </div>
                 <hr />
             </div>
             <f:form
                 class="d-flex flex-column mt-3 w-100"
-                method="PUT"
+                method="POST"
                 action="/projects/${project.id}"
                 modelAttribute="project"
             >

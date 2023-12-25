@@ -2,6 +2,7 @@ package br.com.portifolify.application.entrypoint.webcontroller;
 
 import br.com.portifolify.application.entrypoint.webcontroller.dto.converter.ProjectWebControllerConverter;
 import br.com.portifolify.application.entrypoint.webcontroller.dto.request.StoreProjectRequest;
+import br.com.portifolify.application.entrypoint.webcontroller.dto.request.UpdateProjectRequest;
 import br.com.portifolify.core.usecase.*;
 import br.com.portifolify.core.usecase.dto.ProjectDTO;
 import br.com.portifolify.core.usecase.exception.ManagerNotFoundException;
@@ -25,7 +26,11 @@ public class ProjectController {
 
     private final CreateProjectUseCase createProjectUseCase;
 
+    private final UpdateProjectUseCase updateProjectUseCase;
+
     private final FindAllManagerUseCase findAllManagerUseCase;
+
+    private final FindProjectByIdUseCase findProjectByIdUseCase;
 
     private final FindAllProjectRiskUseCase findAllProjectRiskUseCase;
 
@@ -33,25 +38,23 @@ public class ProjectController {
 
     private final ProjectWebControllerConverter projectControllerConverter;
 
-    private final FindProjectByIdUseCase findProjectByIdUseCase;
-
-    private static final String INDEX_VIEW_PATH = "project/index";
-
-    private static final String CREATE_VIEW_PATH = "project/create";
-
-    private static final String EDIT_VIEW_PATH = "project/edit";
-
-    private static final String VIEW_VAR_PROJECT_RISKS = "projectRisks";
-
-    private static final String VIEW_VAR_PROJECT_STATUSES = "projectStatuses";
-
     private static final String VIEW_VAR_MANAGER = "managers";
 
     private static final String VIEW_VAR_PROJECT = "project";
 
     private static final String VIEW_VAR_PROJECTS = "projects";
 
-    private static final ModelAndView REDIRECT_AFTER_SUCCESS = new ModelAndView("redirect:/projects");
+    private static final String EDIT_VIEW_PATH = "project/edit";
+
+    private static final String INDEX_VIEW_PATH = "project/index";
+
+    private static final String CREATE_VIEW_PATH = "project/create";
+
+    private static final String VIEW_VAR_PROJECT_RISKS = "projectRisks";
+
+    private static final String VIEW_VAR_PROJECT_STATUSES = "projectStatuses";
+
+    private static final ModelAndView REDIRECT_AFTER_ACTION = new ModelAndView("redirect:/projects");
 
     @GetMapping
     public ModelAndView index(
@@ -91,10 +94,13 @@ public class ProjectController {
 
         try {
             ProjectDTO projectDTO = projectControllerConverter.convert(request);
+
             createProjectUseCase.create(projectDTO);
-            return REDIRECT_AFTER_SUCCESS;
+
+            return REDIRECT_AFTER_ACTION;
         } catch (ManagerNotFoundException e) {
             log.warn("Manager not found", e);
+
             validationResult.rejectValue("managerId", "Gerente não é válido");
         }
 
@@ -126,19 +132,28 @@ public class ProjectController {
 
             modelAndView.addObject(VIEW_VAR_MANAGER, findAllManagerUseCase.find());
 
+            return modelAndView;
+
         } catch (ProjectNotFoundException e) {
             log.warn("Project not found", e);
-        }
 
-        return modelAndView;
+            return REDIRECT_AFTER_ACTION;
+        }
     }
 
-    @PutMapping("/{id}")
-    public ModelAndView update(ModelAndView modelAndView, @PathVariable("id") String id) {
+    @PostMapping("/{id}")
+    public ModelAndView update(
+            ModelAndView modelAndView,
+            @PathVariable("id") String id,
+            @Valid @ModelAttribute(VIEW_VAR_PROJECT) UpdateProjectRequest request,
+            BindingResult validationResult
+    ) {
         try {
-            ProjectDTO projectDTO = findProjectByIdUseCase.find(id);
+            request.setId(id);
 
-            modelAndView.addObject(VIEW_VAR_PROJECT, projectControllerConverter.convert(projectDTO));
+            updateProjectUseCase.update(projectControllerConverter.convert(request));
+
+            modelAndView.addObject(VIEW_VAR_PROJECT, request);
 
             modelAndView.setViewName(EDIT_VIEW_PATH);
 
@@ -150,6 +165,8 @@ public class ProjectController {
 
         } catch (ProjectNotFoundException e) {
             log.warn("Project not found", e);
+
+            validationResult.rejectValue("name", "Projeto não existe em nossos registros");
         }
 
         return modelAndView;

@@ -12,4 +12,6 @@ public interface ProjectDAO {
 
     Project findById(String id);
 
+    Project update(Project project);
+
 }
