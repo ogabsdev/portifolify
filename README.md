@@ -37,7 +37,8 @@ Este _template_ utiliza a biblioteca [ArchUnit](https://www.archunit.org/) para 
 princípios arquiteturais não sejam quebrados.
 
 ## Clouds disponíveis para Entrega 
-* AKS (Azure Kubernetes Service);
+* Docker Swarm (CapRover): https://portifolify-stg.servidor.gpnegociosonline.com.br/
+* obs: consultar usuário e senha com recrutadora
 
 ## Como utilizar
 Basta copiar este _template_ para o repositório do seu projeto, renomeando algumas referências e ajustando apropriadamente as configurações de ambiente.
