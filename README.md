@@ -8,7 +8,7 @@ utilizando como base o _framework_ [Spring Boot](https://spring.io/projects/spri
 A arquitetura deste _template_ segue a literatura [The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html),
 implementando simplificadamente 3 camadas (application/core/domain), representadas de maneira bem definida como _subprojects_ em um projeto [Gradle multi-project](https://docs.gradle.org/current/userguide/multi_project_builds.html), conforme diagrama simplificado abaixo.
 
-![clean-arch-diagram.png](docs%2Fclean-arch-diagram.png)
+![clean-arch-diagram.png](docs/clean-arch-diagram.png)
 
 ## Especificações e Frameworks utilizados
 * Spring Boot 3 (Java 17)

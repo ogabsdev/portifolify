@@ -1,15 +1,9 @@
-FROM mcr.microsoft.com/openjdk/jdk:17-ubuntu
+FROM tomcat:jre17-temurin-jammy
 
 ENV TZ=America/Sao_Paulo
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN mkdir /app
-
-ADD ./application-layer/application/build/libs/application.jar /app/application.jar
-
-WORKDIR /app
+ADD ./application-layer/application/target/portifolify.war /usr/local/tomcat/webapps/
 
 EXPOSE 8080
-
-ENTRYPOINT java ${JAVA_OPTS} -jar application.jar
