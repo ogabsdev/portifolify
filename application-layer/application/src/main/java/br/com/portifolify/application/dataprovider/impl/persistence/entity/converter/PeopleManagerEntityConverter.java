@@ -2,6 +2,7 @@ package br.com.portifolify.application.dataprovider.impl.persistence.entity.conv
 
 import br.com.portifolify.application.dataprovider.impl.persistence.entity.PeopleEntity;
 import br.com.portifolify.domain.Manager;
+import br.com.portifolify.domain.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -23,5 +24,11 @@ public interface PeopleManagerEntityConverter {
     @Mapping(target = "dateOfBirth", source = "peopleEntity.dateOfBirth")
     @Mapping(target = "cpf.value", source = "peopleEntity.cpf")
     Manager convert(String encryptedId, PeopleEntity peopleEntity);
+
+    @Mapping(target = "id.value", source = "encryptedId")
+    @Mapping(target = "name", source = "peopleEntity.name")
+    @Mapping(target = "dateOfBirth", source = "peopleEntity.dateOfBirth")
+    @Mapping(target = "cpf.value", source = "peopleEntity.cpf")
+    Member convertToMember(String encryptedId, PeopleEntity peopleEntity);
 
 }
