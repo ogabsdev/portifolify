@@ -34,7 +34,7 @@
 		<mapstruct.version>1.5.2.Final</mapstruct.version>
 		<javax.inject.version>1</javax.inject.version>
 		<javax.persistence.version>2.2</javax.persistence.version>
-		<javax.transaction.version>1.1</javax.transaction.version>
+		<javax.transaction.version>1.2</javax.transaction.version>
 		<h2.version>2.2.220</h2.version>
 		<junit.version>4.13.1</junit.version>
 		<jupiter.version>5.9.0</jupiter.version>
@@ -45,12 +45,15 @@
 		<lombok.mapstruct-binding.version>0.2.0</lombok.mapstruct-binding.version>
 		<archunit.version>1.1.0</archunit.version>
 		<sonarqube.version>3.3</sonarqube.version>
+		<hashid.version>1.0.3</hashid.version>
+		<mockito.version>5.8.0</mockito.version>
 	</properties>
 
 	<modules>
 		<module>business-layer/core</module>
 		<module>business-layer/domain</module>
 		<module>application-layer/application</module>
+		<module>application-layer/unit-test</module>
 		<module>application-layer/integration-test</module>
 	</modules>
 

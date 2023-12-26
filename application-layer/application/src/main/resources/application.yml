@@ -2,10 +2,16 @@ spring:
   jpa:
     open-in-view: false
   mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
   port: 8080
+
+cryptography:
+  salt: 3d0d335e%d27a$48ce$ba6d$f7627d211c87@$
 
 management:
   tracing:
