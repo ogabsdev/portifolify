@@ -16,29 +16,12 @@ public class ProblemDetail {
 
     private static final URI BLANK_TYPE = URI.create("about:blank");
 
-    /**
-     * -- GETTER --
-     *  Return the configured
-     * .
-     */
     @Getter
     private URI type = BLANK_TYPE;
 
     @Nullable
     private String title;
 
-    /**
-     * -- SETTER --
-     *  Setter for the
-     * .
-     *
-     *
-     * -- GETTER --
-     *  Return the status associated with the problem, provided either to the
-     *  constructor or configured via
-     * .
-     @param status the problem status
-     */
     @Getter
     @Setter
     private int status;
@@ -65,36 +48,18 @@ public class ProblemDetail {
         this.properties = (other.properties != null ? new LinkedHashMap<>(other.properties) : null);
     }
 
-    /**
-     * No-arg constructor, for deserialization.
-     */
     protected ProblemDetail() {
     }
 
-
-    /**
-     * Setter for the {@link #getType() problem type}.
-     * <p>By default, this is {@link #BLANK_TYPE}.
-     * @param type the problem type
-     */
     public void setType(URI type) {
         Assert.notNull(type, "'type' is required");
         this.type = type;
     }
 
-    /**
-     * Setter for the {@link #getTitle() problem title}.
-     * <p>By default, if not explicitly set and the status is well-known, this
-     * is sourced from the {@link HttpStatus#getReasonPhrase()}.
-     * @param title the problem title
-     */
     public void setTitle(@Nullable String title) {
         this.title = title;
     }
 
-    /**
-     * Return the configured {@link #setTitle(String) problem title}.
-     */
     @Nullable
     public String getTitle() {
         if (this.title == null) {
@@ -106,26 +71,14 @@ public class ProblemDetail {
         return this.title;
     }
 
-    /**
-     * Setter for the {@link #getStatus() problem status}.
-     * @param httpStatus the problem status
-     */
     public void setStatus(HttpStatus httpStatus) {
         this.status = httpStatus.value();
     }
 
-    /**
-     * Setter for the {@link #getDetail() problem detail}.
-     * <p>By default, this is not set.
-     * @param detail the problem detail
-     */
     public void setDetail(@Nullable String detail) {
         this.detail = detail;
     }
 
-    /**
-     * Return the configured {@link #setDetail(String) problem detail}.
-     */
     @Nullable
     public String getDetail() {
         return this.detail;
