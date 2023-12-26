@@ -43,11 +43,7 @@ public class Project {
 
         @Override
         public Project build() {
-            validate();
             return super.build();
-        }
-
-        private void validate() {
         }
     }
 }
