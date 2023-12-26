@@ -1,0 +1,21 @@
+package br.com.portifolify.core.service.impl;
+
+import br.com.portifolify.core.dataprovider.persistence.dao.ProjectDAO;
+import br.com.portifolify.core.service.DeleteProjectService;
+import br.com.portifolify.domain.Project;
+import lombok.RequiredArgsConstructor;
+
+import javax.inject.Named;
+
+@Named
+@RequiredArgsConstructor
+public class DeleteProjectImpl implements DeleteProjectService {
+
+    private final ProjectDAO projectDAO;
+
+    @Override
+    public void delete(Project project) {
+        projectDAO.delete(project.getId().getValue());
+    }
+
+}

@@ -3,7 +3,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 
-<t:page title="Novo Projeto">
+<t:page title="Editar ${project.name}">
     <jsp:body>
         <div class="p-5 w-100">
             <div class="d-flex flex-column">
@@ -20,12 +20,27 @@
                 </div>
                 <hr />
             </div>
+            <c:if test="${param.error == 'not-can-deleted'}">
+                <div class="d-flex mt-3 w-100 alert alert-danger fade show" role="alert">
+                    O projeto está em uma das situações que não pode ser removido: iniciado, em andamento ou encerrado
+                </div>
+            </c:if>
+             <c:if test="${param.feedback == 'updated'}">
+                <div class="d-flex mt-3 w-100 alert alert-success alert-dismissible fade show" role="alert">
+                    Projeto atualizado com sucesso
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                     </button>
+                </div>
+            </c:if>
             <f:form
                 class="d-flex flex-column mt-3 w-100"
                 method="POST"
                 action="/projects/${project.id}"
                 modelAttribute="project"
+                id="update-project"
             >
+               <input type="hidden" name="_method" value="PUT" />
+
                 <div class="d-flex">
                     <div class="col-3">
                         <h4>Detalhes</h4>
@@ -228,10 +243,12 @@
 
                 <hr />
 
-                <div class="d-flex align-items-center justify-content-start gap-3">
-                    <button
-                        type="submit"
+                <div class="d-flex align-items-center justify-content-start">
+                     <button
+                        type="button"
                         class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete-project-${project.id}"
                     >
                         Remover
                     </button>
@@ -247,11 +264,35 @@
                     <button
                         type="submit"
                         class="btn btn-primary"
+                        id="submit-update-project"
                     >
                         Salvar
                     </button>
                 </div>
             </f:form>
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="delete-project-${project.id}">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Confirmar remoção do projeto: ${project.name}</h5>
+                  </div>
+                  <div class="modal-body">
+                  <p><strong>Atenção:</strong> esta ação não pode ser desfeita. Lembre-se que projetos com status iniciado, em andamento ou encerrado não podem ser removidos.</p>
+                   <f:form id="delete-project" method="POST" action="/projects/${project.id}">
+                        <input type="hidden" name="_method" value="DELETE" />
+                    </f:form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-danger" id="submit-delete-project">
+                        Remover
+                    </button>
+                  </div>
+                </div>
+            </div>
         </div>
     </jsp:body>
 </t:page>

@@ -14,6 +14,31 @@
                 </a>
             </div>
 
+             <c:if test="${param.error == 'not-found'}">
+                <div class="d-flex mt-3 w-100 alert alert-danger alert-dismissible fade show" role="alert">
+                    Projeto não existe em nossos registros
+
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                     </button>
+                </div>
+            </c:if>
+
+             <c:if test="${param.feedback == 'deleted'}">
+                <div class="d-flex mt-3 w-100 alert alert-success alert-dismissible fade show" role="alert">
+                    Projeto removido com sucesso
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                     </button>
+                </div>
+            </c:if>
+
+             <c:if test="${param.feedback == 'insert'}">
+                <div class="d-flex mt-3 w-100 alert alert-success alert-dismissible fade show" role="alert">
+                    Projeto criado com sucesso
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                     </button>
+                </div>
+            </c:if>
+
              <div class="d-flex align-items-center justify-content-start">
                 <form method="GET" action="/projects" class="d-flex flex-column mt-5 w-25">
                     <div class="form-group mb-2">

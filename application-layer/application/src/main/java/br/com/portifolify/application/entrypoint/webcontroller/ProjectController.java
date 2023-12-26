@@ -6,6 +6,7 @@ import br.com.portifolify.application.entrypoint.webcontroller.dto.request.Updat
 import br.com.portifolify.core.usecase.*;
 import br.com.portifolify.core.usecase.dto.ProjectDTO;
 import br.com.portifolify.core.usecase.exception.ManagerNotFoundException;
+import br.com.portifolify.core.usecase.exception.ProjectCanNotDeleteException;
 import br.com.portifolify.core.usecase.exception.ProjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,8 @@ public class ProjectController {
 
     private final UpdateProjectUseCase updateProjectUseCase;
 
+    private final DeleteProjectUseCase deleteProjectUseCase;
+
     private final FindAllManagerUseCase findAllManagerUseCase;
 
     private final FindProjectByIdUseCase findProjectByIdUseCase;
@@ -38,11 +41,15 @@ public class ProjectController {
 
     private final ProjectWebControllerConverter projectControllerConverter;
 
-    private static final String VIEW_VAR_MANAGER = "managers";
+    private static final String VIEW_VAR_ERROR = "error";
 
     private static final String VIEW_VAR_PROJECT = "project";
 
+    private static final String VIEW_VAR_MANAGER = "managers";
+
     private static final String VIEW_VAR_PROJECTS = "projects";
+
+    private static final String VIEW_VAR_FEEDBACK = "feedback";
 
     private static final String EDIT_VIEW_PATH = "project/edit";
 
@@ -53,6 +60,8 @@ public class ProjectController {
     private static final String VIEW_VAR_PROJECT_RISKS = "projectRisks";
 
     private static final String VIEW_VAR_PROJECT_STATUSES = "projectStatuses";
+
+    private static final String PROJECT_NOT_FOUND_LOG_MSG = "Project not found";
 
     private static final ModelAndView REDIRECT_AFTER_ACTION = new ModelAndView("redirect:/projects");
 
@@ -97,7 +106,11 @@ public class ProjectController {
 
             createProjectUseCase.create(projectDTO);
 
-            return REDIRECT_AFTER_ACTION;
+            ModelAndView redirect = REDIRECT_AFTER_ACTION;
+
+            redirect.addObject(VIEW_VAR_FEEDBACK, "insert");
+
+            return redirect;
         } catch (ManagerNotFoundException e) {
             log.warn("Manager not found", e);
 
@@ -135,40 +148,61 @@ public class ProjectController {
             return modelAndView;
 
         } catch (ProjectNotFoundException e) {
-            log.warn("Project not found", e);
+            log.warn(PROJECT_NOT_FOUND_LOG_MSG, e);
 
             return REDIRECT_AFTER_ACTION;
         }
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ModelAndView update(
-            ModelAndView modelAndView,
+            ModelAndView ignoredModel,
             @PathVariable("id") String id,
             @Valid @ModelAttribute(VIEW_VAR_PROJECT) UpdateProjectRequest request,
-            BindingResult validationResult
+            BindingResult ignoredBinding
     ) {
+        ModelAndView redirectToDetail =  new ModelAndView(String.format("redirect:/projects/%s/edit", id));
+
         try {
             request.setId(id);
 
             updateProjectUseCase.update(projectControllerConverter.convert(request));
 
-            modelAndView.addObject(VIEW_VAR_PROJECT, request);
-
-            modelAndView.setViewName(EDIT_VIEW_PATH);
-
-            modelAndView.addObject(VIEW_VAR_PROJECT_RISKS, findAllProjectRiskUseCase.find());
-
-            modelAndView.addObject(VIEW_VAR_PROJECT_STATUSES, findAllProjectStatusUseCase.find());
-
-            modelAndView.addObject(VIEW_VAR_MANAGER, findAllManagerUseCase.find());
-
+            redirectToDetail.addObject(VIEW_VAR_FEEDBACK, "updated");
         } catch (ProjectNotFoundException e) {
-            log.warn("Project not found", e);
+            log.warn(PROJECT_NOT_FOUND_LOG_MSG, e);
 
-            validationResult.rejectValue("name", "Projeto não existe em nossos registros");
+            redirectToDetail.addObject(VIEW_VAR_ERROR, "not-found");
         }
 
-        return modelAndView;
+        return redirectToDetail;
+    }
+
+    @DeleteMapping("/{id}")
+    public ModelAndView delete(
+            ModelAndView ignored,
+            @PathVariable("id") String id
+    ) {
+        ModelAndView redirect =  REDIRECT_AFTER_ACTION;
+
+        try {
+            deleteProjectUseCase.delete(id);
+
+            redirect.addObject(VIEW_VAR_FEEDBACK, "deleted");
+        } catch (ProjectNotFoundException e) {
+            log.warn(PROJECT_NOT_FOUND_LOG_MSG, e);
+
+            redirect.addObject(VIEW_VAR_ERROR, "not-found");
+        } catch (ProjectCanNotDeleteException e) {
+            log.warn("Project can not be deleted", e);
+
+            ModelAndView redirectToDetail =  new ModelAndView(String.format("redirect:/projects/%s/edit", id));
+
+            redirectToDetail.addObject(VIEW_VAR_ERROR, "not-can-deleted");
+
+            return redirectToDetail;
+        }
+
+       return redirect;
     }
 }

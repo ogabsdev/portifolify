@@ -104,7 +104,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    public Project update(Project project) {
+    public void update(Project project) {
         Long projectId = decrypt.value(project.getId().getValue());
 
         ProjectEntity projectEntity = projectEntityConverter.convert(projectId, project);
@@ -115,12 +115,21 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         ProjectEntity projectEntityUpdated = entityManager.merge(projectEntity);
 
-        return projectEntityConverter.convert(
+        projectEntityConverter.convert(
                 encryptedProjectId,
                 encryptedManagerId,
                 projectEntityUpdated,
                 projectStatusDAO.find(projectEntity.getProjectStatus())
         );
+    }
+
+    @Override
+    public void delete(String id) {
+        Long plainId = decrypt.value(id);
+
+        ProjectEntity projectEntity = entityManager.find(ProjectEntity.class, plainId);
+
+        entityManager.remove(projectEntity);
     }
 
 }

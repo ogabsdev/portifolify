@@ -12,6 +12,9 @@ spring:
     password: dev
     driverClassName: org.postgresql.Driver
   mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
