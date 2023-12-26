@@ -6,23 +6,17 @@ utilizando como base o _framework_ [Spring Boot](https://spring.io/projects/spri
 ## Arquitetura
 
 A arquitetura deste _template_ segue a literatura [The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html),
-implementando simplificadamente 3 camadas (application/core/domain), representadas de maneira bem definida como _subprojects_ em um projeto [Gradle multi-project](https://docs.gradle.org/current/userguide/multi_project_builds.html), conforme diagrama simplificado abaixo.
+implementando simplificadamente 3 camadas (application/core/domain), representadas de maneira bem definida como _subprojects_ em um projeto [Maven multiple Modules](https://maven.apache.org/guides/mini/guide-multiple-modules.html), conforme diagrama simplificado abaixo.
 
 ![clean-arch-diagram.png](docs/clean-arch-diagram.png)
 
 ## Especificações e Frameworks utilizados
-* Spring Boot 3 (Java 17)
-* OpenAPI
-* Swagger;
+* Spring Boot 2.7 (Java 17)
 * Logback;
 * Micrometer Tracing;
 * Lombok;
 * MapStruct;
-* Spring Cloud OpenFeign;
-* JPA;
-* OAuth;
-* SonarQube;
-* WireMock;
+* JPA + Hibernate;
 * H2 Database Engine;
 * Rest Assured;
 * ArchUnit;
@@ -31,19 +25,12 @@ implementando simplificadamente 3 camadas (application/core/domain), representad
 
 ## Considerações
 
-#### Fluxo de Negócio implementado como exemplo:
-Este _template_ possui um fluxo de Negócio implementado como exemplo, que consiste num CRUD de 
-Clientes (modelo de domínio em questão), integrando com uma API de Bureau externo e gerando
-[Eventos de Domínio](https://microservices.io/patterns/data/domain-event.html) via Kafka utilizando o
-_pattern_ [Transactional outbox](https://microservices.io/patterns/data/transactional-outbox.html).
-
-#### Dependências externas:
-Um diretório com Docker Compose foi disponibilizado para emular dependências externas no ambiente de desenvolvimento, 
-permitindo que o desenvolvedor trabalhe mesmo sem acesso à internet/VPN.
-
 #### Testes integrados:
-Um _subproject_ específico ("application-layer:**integration-test**") para testes integrados foi implementado, com um mecanismo facilitador para emular 
-dependências Web externas, utilizando o _framework_ [WireMock](https://wiremock.org/), garantindo assim mais produtividade e uma cobertura de testes mais eficaz.
+(Recomendado) Um _subproject_ específico ("application-layer:**integration-test**") para testes integrados foi implementado
+
+#### Tests Unitários:
+Um _subproject_ específico ("application-layer:**unit-test**") para testes unitários cobrindo os principais casos de uso desta aplicação foi implementado.
+Embora os _Testes Integrados_ apresentassem maior utilidade e cobertura para este template.
 
 #### Testes de Arquitetura:
 Este _template_ utiliza a biblioteca [ArchUnit](https://www.archunit.org/) para garantir que as boas práticas e os 
@@ -59,5 +46,5 @@ Basta copiar este _template_ para o repositório do seu projeto, renomeando algu
 
 ```bash
   sudo docker-compose -f docker-compose/docker-compose.yml up
-  ./gradlew run  
+  ./mvnw clean install spring-boot:run
 ```
