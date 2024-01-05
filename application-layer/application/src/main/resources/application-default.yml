@@ -1,9 +1,9 @@
 logging:
-  config: classpath:logback-local.xml
+  config: classpath:logback.xml
 
 spring:
   h2:
-    console.enabled: true
+   console.enabled: true
   datasource:
     url: jdbc:h2:mem:mydb
     username: sa
@@ -16,9 +16,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  kafka:
-    bootstrap-servers: 127.0.0.1:9093
-
-external-service:
-  credit-bureau-api:
-    url: http://127.0.0.1:2030/credit-bureau-api

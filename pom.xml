@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.0</version>
+		<version>2.7.18</version>
 		<relativePath/>
 	</parent>
 
@@ -27,32 +27,33 @@
 		<maven.checkstyle.version>3.3.1</maven.checkstyle.version>
 		<maven.pmd.version>3.21.2</maven.pmd.version>
 		<maven.jacoco.version>0.8.11</maven.jacoco.version>
-		<spring.web.version>3.1.5</spring.web.version>
-		<spring.dependency.version>3.2.0</spring.dependency.version>
+		<spring.dependency.version>2.7.18</spring.dependency.version>
 		<spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
-		<spring.doc.version>2.2.0</spring.doc.version>
-		<logstash.version>7.2</logstash.version>
+		<spring.cloud.sleuth.version>3.1.7</spring.cloud.sleuth.version>
+		<logstash.version>5.1</logstash.version>
 		<mapstruct.version>1.5.2.Final</mapstruct.version>
-		<jakarta.inject.version>2.0.1</jakarta.inject.version>
-		<feign.version>4.1.0</feign.version>
+		<javax.inject.version>1</javax.inject.version>
+		<javax.persistence.version>2.2</javax.persistence.version>
+		<javax.transaction.version>1.2</javax.transaction.version>
 		<h2.version>2.2.220</h2.version>
 		<junit.version>4.13.1</junit.version>
-<!--		<assertj.version>3.23.1</assertj.version>-->
 		<jupiter.version>5.9.0</jupiter.version>
 		<jupiter.engine.version>5.8.2</jupiter.engine.version>
-		<awaitility.version>4.2.0</awaitility.version>
 		<wiremock.version>3.0.4</wiremock.version>
 		<restassured.version>5.3.2</restassured.version>
 		<lombok.version>1.18.24</lombok.version>
 		<lombok.mapstruct-binding.version>0.2.0</lombok.mapstruct-binding.version>
 		<archunit.version>1.1.0</archunit.version>
 		<sonarqube.version>3.3</sonarqube.version>
+		<hashid.version>1.0.3</hashid.version>
+		<mockito.version>5.8.0</mockito.version>
 	</properties>
 
 	<modules>
 		<module>business-layer/core</module>
 		<module>business-layer/domain</module>
 		<module>application-layer/application</module>
+		<module>application-layer/unit-test</module>
 		<module>application-layer/integration-test</module>
 	</modules>
 
@@ -60,12 +61,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -82,6 +77,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>portifolify</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

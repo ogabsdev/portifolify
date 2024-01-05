@@ -15,12 +15,12 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>br.com</groupId>
 			<artifactId>application</artifactId>
 			<version>${parent.version}</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

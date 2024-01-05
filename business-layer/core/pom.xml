@@ -28,15 +28,14 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>jakarta.transaction</groupId>
-			<artifactId>jakarta.transaction-api</artifactId>
-			<scope>compile</scope>
+			<groupId>javax.transaction</groupId>
+			<artifactId>javax.transaction-api</artifactId>
+			<version>${javax.transaction.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>jakarta.inject</groupId>
-			<artifactId>jakarta.inject-api</artifactId>
-			<version>${jakarta.inject.version}</version>
-			<scope>compile</scope>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>${javax.inject.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

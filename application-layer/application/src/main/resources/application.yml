@@ -1,18 +1,17 @@
 spring:
   jpa:
     open-in-view: false
-  kafka:
-    consumer:
-      auto-offset-reset: earliest
-      group-id: ms-template-group-id
-
-server:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
   port: 8080
 
-springdoc:
-  swagger-ui.path: /swagger-ui
-  packagesToScan: br.com.via.application.entrypoint.restcontroller
-  pathsToMatch: /**
+cryptography:
+  salt: 3d0d335e%d27a$48ce$ba6d$f7627d211c87@$
 
 management:
   tracing:
@@ -22,13 +21,3 @@ management:
     web:
       exposure:
         include=*:
-
-logging:
-  level:
-    br.com.via.dataprovider.web.restclient: DEBUG
-
-kafka:
-  topics:
-    customer-domain-event:
-      name: register.cmd.customer # <domain>.<classification>.<description>
-
